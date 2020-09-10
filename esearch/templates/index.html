@@ -1,0 +1,139 @@
+{% load static %}
+<html lang="ko">
+    <head>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+    <meta name="description" content="elasticsearc example">
+    <meta property="og:title" content="elasticsearc example">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="ko_KR">
+    <meta property="og:description" content="elasticsearc example">
+    <title>Elastic Search Example w/ new-ara</title>
+
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+  />
+  <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+    </head>
+    <body>
+
+
+        <div class="page main">
+            <div class="center-content">
+                <h1 class="wow">NEW ARA</h1>
+                <h3 class="wow">elasticsearch demo</h3>
+            </div>
+            <input id="query" type="text" placeholder="Search for">
+            <div class="nav-button-big" id="elastic-button">elastic search</div>
+            <div class="nav-button-big" id="fulltext-button">full-text-index search</div>
+            <div class="nav-button-big" id="contain-button">contain search</div>
+
+            <div class="center-content">
+                <h1 class="wow" style="margin-top: 100px; display:inline-block">검색결과</h1>
+                <h4 id="time"></h4>
+                <h4 id="count"></h4>
+                <div class="search-content">
+
+                </div>
+            </div>
+
+        </div>
+        <script src="https://code.jquery.com/jquery-3.x-git.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script src="js/wow.min.js"></script>
+        <script>
+
+            $("#elastic-button").click(function () {
+                $(".search-content").empty();
+                let search_content = $("#query").val();
+                axios.get('/search/' + search_content, {
+
+                })
+                .then(function (response) {
+                    $("#time").text("" +response.data.time + "초 소요");
+                    $("#count").text(response.data.hits.total.value + "개가 검색되었습니다.");
+                    for (let value of response.data.hits.hits) {
+                        $(".search-content").append(
+                          "<div class=\"search\">" +
+                              "<div class=\"search-title\">" + value._source.title + "</div>" +
+                              "<div class=\"search-content-text\">" + value._source.content + "</div>" +
+                           "</div>"
+                        )
+                    }
+                })
+                .catch(function (error) {
+                  console.log(error);
+                })
+                .then(function () {
+                  // always executed
+                });  
+            });
+            
+            $("#fulltext-button").click(function () {
+                $(".search-content").empty();
+                let search_content = $("#query").val();
+                axios.get('/search/fulltextindex/' + search_content, {
+
+                })
+                .then(function (response) {
+                    console.log(response);
+                    $("#time").text("" + response.data[0] + "초 소요");
+                    $("#count").text(response.data[1] + "개가 검색되었습니다.");
+                    response.data.shift()
+                    response.data.shift()
+                    for (let value of response.data) {
+                        
+                        $(".search-content").append(
+                          "<div class=\"search\">" +
+                              "<div class=\"search-title\">" + value.title + "</div>" +
+                              "<div class=\"search-content-text\">" + value.content + "</div>" +
+                           "</div>"
+                        )
+                    }
+                })
+                .catch(function (error) {
+                  console.log(error);
+                })
+                .then(function () {
+                  // always executed
+                });  
+            });
+
+            $("#contain-button").click(function () {
+                $(".search-content").empty();
+                let search_content = $("#query").val();
+                axios.get('/search/contain/' + search_content, {
+
+                })
+                .then(function (response) {
+                    console.log(response);
+                    $("#time").text("" + response.data[0] + "초 소요");
+                    $("#count").text(response.data[1] + "개가 검색되었습니다.");
+                    response.data.shift()
+                    response.data.shift()
+                    for (let value of response.data) {
+                        
+                        $(".search-content").append(
+                          "<div class=\"search\">" +
+                              "<div class=\"search-title\">" + value.title + "</div>" +
+                              "<div class=\"search-content-text\">" + value.content + "</div>" +
+                           "</div>"
+                        )
+                    }
+                })
+                .catch(function (error) {
+                  console.log(error);
+                })
+                .then(function () {
+                  // always executed
+                });  
+            });
+
+            new WOW().init();
+
+        </script>
+    </body>
+</html>
