@@ -6,6 +6,9 @@ SPARCS 뉴아라팀 가을 첫 세미나 elasticsearch 구현체입니다.
 
 ## Screenshots 
 
-![](https://github.com/hjh010501/sparcs-seminar-elasticsearch/blob/master/docs/screenshot/main.png)
+![](https://github.com/hjh010501/sparcs-seminar-elasticsearch/blob/master/docs/screenshot/1.png)
 
-@iv-y @kidevelop
+![](https://github.com/hjh010501/sparcs-seminar-elasticsearch/blob/master/docs/screenshot/2.png)
+
+## Contributors in seminar
+@kidevelop @iv-y
