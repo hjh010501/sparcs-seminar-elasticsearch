@@ -11,9 +11,21 @@ connections.create_connection(hosts=['localhost'])
 
 class NewaraIndex(Document):
     id = Integer()
+    created_at = Date()
+    updated_at = Date()
+    deleted_at = Date()
+    commented_at = Date()
     title = Text()
     content = Text()
     content_text = Text()
+    is_anonymous = Integer()
+    is_content_sexual = Integer()
+    is_content_social = Integer()
+    positive_vote_count = Integer()
+    negative_vote_count = Integer()
+    created_by_id = Integer()
+    parent_board_id = Integer()
+    parent_topic_id = Integer()
     url = Text()
 
     class Index:
